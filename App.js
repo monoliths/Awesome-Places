@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 
 import PlaceInput from './src/components/PlaceInput/PlaceInput';
 import PlaceList from "./src/components/PlaceList/PlaceList";
+import { throwStatement } from '@babel/types';
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -18,11 +19,24 @@ export default class App extends Component<Props> {
     });
   };
 
+  placeDeletedHandler = index => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.filter((place, i) => {
+          return i !== index;
+        })
+      };
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <PlaceInput  onPlaceAdded={this.placeAddedHandler} />
-        <PlaceList places={this.state.places} />
+        <PlaceList 
+          places={this.state.places} 
+          OnItemDeleted={this.placeDeletedHandler} 
+        />
       </View >
     );
   }
