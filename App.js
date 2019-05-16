@@ -11,19 +11,20 @@ export default class App extends Component<Props> {
     places: []
   };
 
+  // Using rand is not ideal for key, but it will do for this example
   placeAddedHandler = placeName => {
     this.setState(prevState => {
       return {
-        places: prevState.places.concat(placeName)
+        places: prevState.places.concat({key: Math.random(), value: placeName})
       };
     });
   };
 
-  placeDeletedHandler = index => {
+  placeDeletedHandler = key => {
     this.setState(prevState => {
       return {
         places: prevState.places.filter((place, i) => {
-          return i !== index;
+          return place.key !== key;
         })
       };
     });
